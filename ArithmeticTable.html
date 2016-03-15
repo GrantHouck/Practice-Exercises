@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta chartset="utf-8"/>
+		<title>Times Tables</title>
+	</head>
+	<body>
+		<script>
+			// arithemtic operation functions to be passed to writeTimesTable
+			function add(x,y)
+			{
+				return x + y;
+			}
+			function subtract(x,y)
+			{
+				return x - y;
+			}
+			function divide(x,y)
+			{
+				return (x / y).toFixed(2);
+			}
+			function multiply(x,y)
+			{
+				return x * y;
+			}
+		
+			// func that does the times table writing to the document
+			function writeTimesTable(table, start, end, operation, operationSymbol)
+			{
+				while (start <= end)
+				{
+					document.write(table + " " + operationSymbol + " " + start + " = " + operation(table, start) + "<br/>");
+					start++;
+				}
+			}
+			
+			// main func. gathers all data and passes it to writeTimesTable. continues until user exits.
+			function writeTables() {
+				
+				// data to be passed to writeTimesTable
+				var table = "";
+				var start = "";
+				var end = "";
+				var operation = null;
+				var operationSymbol = "";
+				
+				// data for loop logic
+				var chosenOperation = "";
+				var anotherTable = "";
+				
+				// start of main loop
+				do {
+					do {
+						table = prompt("What times table would you like to see?",12);
+					} while (isNaN(table))
+					
+					do {
+						start = prompt("What number would you like to start on?",1);
+					} while (isNaN(start))
+					
+					do {
+						end = prompt("What number would you like to end on?",12);
+					} while (isNaN(end))
+				
+					do {
+						chosenOperation = prompt("Would you like a (D)ivision table, (M)ultiplication table, (S)ubtraction table, or (A)ddition table?","M");
+						chosenOperation = chosenOperation.toUpperCase();
+						switch (chosenOperation)
+						{
+							case "A":
+								operation = add;
+								operationSymbol = "+";
+								break;
+							case "M":
+								operation = multiply;
+								operationSymbol = "*";
+								break;
+							case "D":
+								operation = divide;
+								operationSymbol = "/";
+								break;
+							case "S":
+								operation = subtract;
+								operationSymbol = "-";
+								break;
+							default:
+								console.log("Sumtin brohke");
+								break;
+						}
+					} while (chosenOperation != "M" && chosenOperation != "S" && chosenOperation != "D" && chosenOperation != "A")
+					
+					//parse numbers to be passed to writeTimesTable
+					table = parseInt(table,10);
+					start = parseInt(start,10);
+					end = parseInt(end,10);
+				
+					writeTimesTable(table, start, end, operation, operationSymbol);
+					document.write("<br/><br/>");
+					
+					//check if user would like to continue or quit
+					do {
+						anotherTable = prompt("Would you like to print another times table? \"c\": continue \"q\": quit","q");
+						anotherTable = anotherTable.toLowerCase()
+					} while (anotherTable != "q" && anotherTable != "c")
+				} while (anotherTable == "c");
+				
+			}
+			
+			writeTables();
+		</script>
+	</body>
+</head>
